@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/funnyjokes/funnyjokes.iml" filepath="$PROJECT_DIR$/funnyjokes/funnyjokes.iml" />
       <module fileurl="file://$PROJECT_DIR$/funnyjokeslibrary/funnyjokeslibrary.iml" filepath="$PROJECT_DIR$/funnyjokeslibrary/funnyjokeslibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jokesbackend/jokesbackend.iml" filepath="$PROJECT_DIR$/jokesbackend/jokesbackend.iml" />
       <module fileurl="file://$PROJECT_DIR$/nanodegree_gradle_project.iml" filepath="$PROJECT_DIR$/nanodegree_gradle_project.iml" />
     </modules>
   </component>
