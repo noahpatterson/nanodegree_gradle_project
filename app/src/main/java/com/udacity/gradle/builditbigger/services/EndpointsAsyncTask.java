@@ -1,11 +1,13 @@
 package com.udacity.gradle.builditbigger.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
+import com.example.udacity_noah.funnyjokeslibrary.DisplayJokeActivity;
 import com.example.webteam.myapplication.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -17,12 +19,12 @@ import java.io.IOException;
 /**
  * Created by noahpatterson on 12/20/15.
  */
-public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(Context... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -39,13 +41,17 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
             // end options for devappserver
 
             myApiService = builder.build();
+            try {
+                Log.d("api_url", myApiService.getJoke().buildHttpRequestUrl().getRawPath());
+            } catch (IOException e) {
+
+            }
         }
 
-        context = params[0].first;
-        String name = params[0].second;
+        context = params[0];
 
         try {
-            return myApiService.sayHi(name).execute().getData();
+            return myApiService.getJoke().execute().getData();
         } catch (IOException e) {
             Log.d("Log", e.getMessage());
             return e.getMessage();
@@ -54,6 +60,9 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(context, DisplayJokeActivity.class);
+        intent.putExtra("joke", result);
+        context.startActivity(intent);
     }
 }

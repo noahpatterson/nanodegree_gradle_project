@@ -47,12 +47,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view){
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        new EndpointsAsyncTask().execute(this);
 
-        String joke = FunnyJokes.getjoke();
-        Intent intent = new Intent(this, DisplayJokeActivity.class);
-        intent.putExtra("joke", joke);
-        startActivity(intent);
+//        String joke = FunnyJokes.getjoke();
+//        Intent intent = new Intent(this, DisplayJokeActivity.class);
+//        intent.putExtra("joke", joke);
+//        startActivity(intent);
 //        Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
     }
 
