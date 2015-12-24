@@ -23,6 +23,12 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
 
+    private OnTaskCompleted taskCompleted;
+
+    public EndpointsAsyncTask(OnTaskCompleted activityContext){
+        this.taskCompleted = activityContext;
+    }
+
     @Override
     protected String doInBackground(Context... params) {
         if(myApiService == null) {  // Only do this once
@@ -41,11 +47,7 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
             // end options for devappserver
 
             myApiService = builder.build();
-            try {
-                Log.d("api_url", myApiService.getJoke().buildHttpRequestUrl().getRawPath());
-            } catch (IOException e) {
 
-            }
         }
 
         context = params[0];
@@ -61,8 +63,13 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 //        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(context, DisplayJokeActivity.class);
-        intent.putExtra("joke", result);
-        context.startActivity(intent);
+//        Intent intent = new Intent(context, DisplayJokeActivity.class);
+//        intent.putExtra("joke", result);
+//        context.startActivity(intent);
+        taskCompleted.onTaskCompleted(result);
+    }
+
+    public interface OnTaskCompleted {
+        void onTaskCompleted(String response);
     }
 }
