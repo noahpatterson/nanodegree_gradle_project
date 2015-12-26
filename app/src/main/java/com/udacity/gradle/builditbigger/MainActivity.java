@@ -15,7 +15,7 @@ import com.example.udacity_noah.funnyjokeslibrary.DisplayJokeActivity;
 import com.udacity.gradle.builditbigger.services.EndpointsAsyncTask;
 
 
-public class MainActivity extends ActionBarActivity implements EndpointsAsyncTask.OnTaskCompleted{
+public class MainActivity extends ActionBarActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +46,6 @@ public class MainActivity extends ActionBarActivity implements EndpointsAsyncTas
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
-        new EndpointsAsyncTask(this).execute(this);
-
-//        String joke = FunnyJokes.getjoke();
-//        Intent intent = new Intent(this, DisplayJokeActivity.class);
-//        intent.putExtra("joke", joke);
-//        startActivity(intent);
-//        Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
-    }
 
 
-    @Override
-    public void onTaskCompleted(String response) {
-        Intent intent = new Intent(this, DisplayJokeActivity.class);
-        intent.putExtra("joke", response);
-        startActivity(intent);
-    }
 }
