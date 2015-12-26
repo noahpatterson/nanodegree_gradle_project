@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.udacity_noah.funnyjokeslibrary.DisplayJokeActivity;
 import com.google.android.gms.ads.AdListener;
@@ -24,6 +25,7 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
     InterstitialAd interstitialAd;
     Boolean pulledJoke = false;
     String joke;
+    private ProgressBar spinner;
 
 
 
@@ -35,6 +37,10 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
+
+
+        spinner = (ProgressBar) root.findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
 
 
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
@@ -55,18 +61,26 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                tellJoke();
+//                tellJoke();
+                pullJoke();
+                spinner.setVisibility(View.VISIBLE);
             }
+
+//            @Override
+//            public void onAdOpened() {
+//                spinner.setVisibility(View.GONE);
+//            }
         });
 
         requestNewInterstitial();
-        pullJoke();
+//        pullJoke();
 
         Button jokesButton = (Button) root.findViewById(R.id.tellJokeButton);
         jokesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (interstitialAd.isLoaded()) {
+//                    spinner.setVisibility(View.VISIBLE);
                     interstitialAd.show();
                 } else {
                     tellJoke();
@@ -98,7 +112,9 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
 
     @Override
     public void onTaskCompleted(String response) {
-        joke = response;
-        pulledJoke = true;
+//        joke = response;
+//        pulledJoke = true;
+        tellJoke();
+        spinner.setVisibility(View.GONE);
     }
 }
