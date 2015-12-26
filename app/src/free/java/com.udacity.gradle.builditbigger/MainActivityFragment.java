@@ -22,6 +22,8 @@ import com.udacity.gradle.builditbigger.services.EndpointsAsyncTask;
 public class MainActivityFragment extends Fragment implements EndpointsAsyncTask.OnTaskCompleted {
 
     InterstitialAd interstitialAd;
+    Boolean pulledJoke = false;
+    String joke;
 
 
 
@@ -58,6 +60,7 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
         });
 
         requestNewInterstitial();
+        pullJoke();
 
         Button jokesButton = (Button) root.findViewById(R.id.tellJokeButton);
         jokesButton.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +86,19 @@ public class MainActivityFragment extends Fragment implements EndpointsAsyncTask
         interstitialAd.loadAd(adRequest);
     }
 
-    public void tellJoke(){
+    private void pullJoke() {
         new EndpointsAsyncTask(this).execute(getContext());
+    }
+
+    public void tellJoke(){
+        Intent intent = new Intent(getContext(), DisplayJokeActivity.class);
+        intent.putExtra("joke", joke);
+        startActivity(intent);
     }
 
     @Override
     public void onTaskCompleted(String response) {
-        Intent intent = new Intent(getContext(), DisplayJokeActivity.class);
-        intent.putExtra("joke", response);
-        startActivity(intent);
+        joke = response;
+        pulledJoke = true;
     }
 }
