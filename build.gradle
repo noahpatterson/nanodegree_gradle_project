@@ -17,3 +17,28 @@ allprojects {
         jcenter()
     }
 }
+
+task startServer {
+    dependsOn ':jokesbackend:appengineRun'
+    doLast {
+        println "starting app engine"
+    }
+}
+
+task stopServer {
+    dependsOn ':jokesbackend:appengineStop'
+    doLast {
+        println "stopping app engine"
+    }
+}
+
+task runTests {
+    dependsOn ':app:deviceCheck'
+    mustRunAfter startServer
+    finalizedBy stopServer
+}
+
+
+task runAll {
+    dependsOn startServer, runTests
+}
